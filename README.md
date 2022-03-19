@@ -31,7 +31,7 @@ docker run -e url=https://google.com/ href-counter
 
 Validate the Docker build.  This is a good time experiment with commands from the Docker cheat sheet.  
 ```
-docker images # 4 images: apline & goland pulled from DockerHub, a named *developer* image, and href-counter
+docker images # 4 images: apline & goland pulled from DockerHub, a named **developer** image, and href-counter
 docker iamges --all # show additional image layers created during the build
 docker ps -a # No containers until you run something
 
@@ -39,13 +39,12 @@ docker ps -a # No containers until you run something
 docker run -e url=https://github.com/ href-counter
 docker ps -a # A containers for each run command
 ```
-_*Extra Credit*_
+_**Extra Credit**_
 Can you retrieve the "app" and run it locally?
-Is the "app" located in the same directory for both the _developer_ and _deployer_ images?  Can you prove it?
+Is the "app" located in the same directory for both the **developer** and **deployer** images?  Can you prove it?
 
 ## Clean up
 ```
-docker 
-docker image prune -a # Destroy all images
-TBD
+docker rm -vf $(docker ps -aq  
+docker rmi -f $(docker images -aq)
 ```

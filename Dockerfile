@@ -1,4 +1,4 @@
-FROM golang:1.13 golang_build
+FROM golang:1.13 AS golang_build
 
 WORKDIR /go/src/github.com/alexellis/href-counter/
 

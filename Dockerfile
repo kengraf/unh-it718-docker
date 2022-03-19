@@ -1,4 +1,4 @@
-FROM golang:1.13 golang-base
+FROM golang:1.13 golang_build
 
 WORKDIR /go/src/github.com/alexellis/href-counter/
 
@@ -12,6 +12,6 @@ RUN apk --no-cache add ca-certificates
 
 WORKDIR /root/
 
-COPY --from=golang-base /go/src/github.com/alexellis/href-counter/app    .
+COPY --from=golang_build /go/src/github.com/alexellis/href-counter/app    .
 
 CMD ["./app"]

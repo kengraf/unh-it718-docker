@@ -5,7 +5,7 @@ WORKDIR /go/src/
 
 COPY http.go	.
 
-RUN go CGO_ENABLED=0 GOOS=linux build -a -installsuffix cgo -o http .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o http .
 
 # Deployer needs only enough to run statically linked http application
 FROM scratch

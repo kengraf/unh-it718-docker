@@ -21,7 +21,7 @@ func headers(w http.ResponseWriter, req *http.Request) {
 
 func dowork(w http.ResponseWriter, req *http.Request) {
 
-    sum = 0
+    var sum = 0
     for i := 1; i < 5000000; i++ {
         sum += i * 1234 % 13
     }

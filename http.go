@@ -3,7 +3,7 @@ package main
 import (
     "fmt"
     "net/http"
-    "math"
+    "math/rand"
 )
 
 func hello(w http.ResponseWriter, req *http.Request) {
@@ -24,7 +24,9 @@ func dowork(w http.ResponseWriter, req *http.Request) {
 
     var sum = 0
     for i := 1; i < 5000000; i++ {
-        sum += math.Pow( sum, i )
+        for j := 1; j < i; i++ {
+            sum += i * rand.Intn(j)
+        }
     }
     fmt.Fprintf(w, "done %d\n", sum )
 }

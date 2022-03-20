@@ -6,7 +6,7 @@ WORKDIR /go/src/
 # COPY vendor vendor
 COPY http.go	.
 
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o http .
 
 # Deployer needs only enough to run statically linked app
 FROM scratch

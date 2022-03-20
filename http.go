@@ -3,6 +3,7 @@ package main
 import (
     "fmt"
     "net/http"
+    "math"
 )
 
 func hello(w http.ResponseWriter, req *http.Request) {
@@ -23,7 +24,7 @@ func dowork(w http.ResponseWriter, req *http.Request) {
 
     var sum = 0
     for i := 1; i < 5000000; i++ {
-        sum += i * 1234 % 13
+        sum += math.Pow( sum, i )
     }
     fmt.Fprintf(w, "done %d\n", sum )
 }

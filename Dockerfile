@@ -17,4 +17,4 @@ WORKDIR /root/
 
 COPY --from=golang_build /go/src/http  .
 
-CMD ["./app"]
+CMD ["/root/http"]

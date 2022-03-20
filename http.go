@@ -19,10 +19,20 @@ func headers(w http.ResponseWriter, req *http.Request) {
     }
 }
 
+func dowork(w http.ResponseWriter, req *http.Request) {
+
+    sum = 0
+    for i := 1; i < 5000000; i++ {
+        sum += i * 1234 % 13
+    }
+    fmt.Fprintf(w, "done %d\n", sum )
+}
+
 func main() {
 
     http.HandleFunc("/hello", hello)
     http.HandleFunc("/headers", headers)
+    http.HandleFunc("/dowork", dowork)
 
     http.ListenAndServe(":8090", nil)
 }

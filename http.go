@@ -23,7 +23,7 @@ func headers(w http.ResponseWriter, req *http.Request) {
 func dowork(w http.ResponseWriter, req *http.Request) {
 
     var sum = 0
-    for i := 1; i < 5000; i++ {
+    for i := 1; i < 50000; i++ {
         for j := 1; j < i; j++ {
             sum += i * rand.Intn(j)
         }

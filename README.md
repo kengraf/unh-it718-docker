@@ -60,7 +60,8 @@ Is there any way to debug the "http" container?
 What happens to the images and containers when the cloudshell session temrinates?  
 
 ## Lesson #3
-Now that we have a deploy focused Docker image, it is time to learn about scaling it with Kubernetes
+Now that we have a deploy focused Docker image, it is time to learn about scaling it with Kubernete.  
+[Original demo](https://cloud.google.com/kubernetes-engine/docs/tutorials/guestbook)  
 
 ```
 ```

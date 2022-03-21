@@ -63,11 +63,44 @@ What happens to the images and containers when the cloudshell session temrinates
 
 ## Lesson #3
 Now that we have a deploy focused Docker image, it is time to learn about scaling it with Kubernete.  
-[Original demo](https://cloud.google.com/kubernetes-engine/docs/tutorials/guestbook)  
+A more complete deployment back & front endis provided in Google's Kubenetes examples: [GCP demo](https://cloud.google.com/kubernetes-engine/docs/tutorials/guestbook)  
+
+Create a new cluster for the deployment
+```
+gcloud container clusters create http --num-nodes=4
+gcloud container clusters list
+gcloud container clusters describe http
+```
 
 ```
-gcloud container clusters create guestbook --num-nodes=4
+# unneeded backend
+kubectl apply -f redis-leader-deployment.yaml
+kubectl get pods
+kubectl logs deployment/redis-leader
+kubectl apply -f redis-leader-service.yaml
+kubectl get service
+kubectl apply -f redis-follower-deployment.yaml
+kubectl get pods
+kubectl logs deployment/redis-follower
+kubectl apply -f redis-follower-service.yaml
+kubectl get service
+```
 
+Deploy frontend
+```
+kubectl apply -f http-deployment.yaml
+kubectl get pods -l app=http -l tier=frontend
+kubectl apply -f http-service.yaml
+kubectl get service http
+kubectl scale deployment http --replicas=5
+kubectl get pods
+```
+
+Clean up
+```
+kubectl delete service http
+gcloud compute forwarding-rules list
+gcloud container clusters delete http
 ```
 
 ```

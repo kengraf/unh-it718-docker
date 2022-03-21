@@ -16,7 +16,7 @@ gcloud services list --available
 gcloud services enable container.googleapis.com
 ```
 [Docker cheat sheet](https://dockerlabs.collabnix.com/docker/cheatsheet/)  
-[Kubenetes cheat sheet]()  
+[Kubenetes cheat sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)  
 
 ## Lesson #1
 Review Docker Lab's Github: [12 Factor Application](https://github.com/docker/labs/tree/master/12factor)
@@ -64,6 +64,9 @@ Now that we have a deploy focused Docker image, it is time to learn about scalin
 [Original demo](https://cloud.google.com/kubernetes-engine/docs/tutorials/guestbook)  
 
 ```
+# Run this in a separate terminal
+# so that the load generation continues and you can carry on with the rest of the steps
+kubectl run -i --tty load-generator --rm --image=busybox --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- http://php-apache; done"
 ```
 
 ## Clean up

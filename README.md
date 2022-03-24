@@ -89,6 +89,7 @@ kubectl apply -f service.yaml
   or
 kubectl expose deployment http --name=http --type=LoadBalancer --port 80 --target-port 8090
 kubectl get service http
+kubectl autoscale deployment http --cpu-percent=80 --min=1 --max=5
 kubectl scale deployment http --replicas=5
 kubectl get pods
 ```

@@ -7,23 +7,13 @@ spec:
   selector:
     matchLabels:
         app: http
-        tier: frontend
   template:
     metadata:
       labels:
         app: http
-        tier: frontend
     spec:
       containers:
       - name: http
         image: http
-        env:
-        - name: GET_HOSTS_FROM
-          value: "dns"
-        resources:
-          requests:
-            cpu: 100m
-            memory: 100Mi
         ports:
         - containerPort: 80
----

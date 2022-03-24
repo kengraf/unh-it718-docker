@@ -80,26 +80,14 @@ gcloud container clusters list
 gcloud container clusters describe http
 ```
 
-```
-# unneeded backend
-kubectl apply -f redis-leader-deployment.yaml
-kubectl get pods
-kubectl logs deployment/redis-leader
-kubectl apply -f redis-leader-service.yaml
-kubectl get service
-kubectl apply -f redis-follower-deployment.yaml
-kubectl get pods
-kubectl logs deployment/redis-follower
-kubectl apply -f redis-follower-service.yaml
-kubectl get service
-```
-
 Deploy frontend
 Note: This assumes the http image generated above is still available locally
 ```
 kubectl apply -f deployment.yaml
 kubectl get pods -l app=http -l tier=frontend
 kubectl apply -f service.yaml
+  or
+kubectl expose deployment http --name=http --type=LoadBalancer --port 80 --target-port 8090
 kubectl get service http
 kubectl scale deployment http --replicas=5
 kubectl get pods

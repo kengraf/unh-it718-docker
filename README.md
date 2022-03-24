@@ -71,6 +71,7 @@ You will a docker hub account http://hub.docker.com.
 docker login --username YOUR_NAME
 docker tag http YOUR_NAME/http:v1
 docker push YOUR_NAME/http:v1
+
 ```
 
 Create a new cluster for the deployment
@@ -78,6 +79,7 @@ Create a new cluster for the deployment
 gcloud container clusters create http --num-nodes=4
 gcloud container clusters list
 gcloud container clusters describe http
+
 ```
 
 Deploy frontend
@@ -92,26 +94,40 @@ kubectl get service http
 kubectl autoscale deployment http --cpu-percent=80 --min=1 --max=5
 kubectl scale deployment http --replicas=5
 kubectl get pods
+
 ```
 
-Clean up
+Commands to check status
 ```
-kubectl delete service http
-gcloud compute forwarding-rules list
-gcloud container clusters delete http
+kubectl get deployments
+kubectl get services
+kubectl rollout status deployment/http
+kubectl get rs
+kubectl get pods --show-labels
+
 ```
 
 ```
 # Run this in a separate terminal
 # so that the load generation continues and you can carry on with the rest of the steps
-kubectl run -i --tty load-generator --rm --image=busybox --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- http://php-apache; done"
+kubectl run -i --tty load-generator --rm --image=busybox --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- http://EXTERNAL_LOADBALANCER_IP/hello; done"
+
 ```
 
-## Clean up
+
+Clean up Kubernetes
+```
+kubectl delete service http
+kubectl delete deployment http
+gcloud compute forwarding-rules list
+gcloud container clusters delete http
+
+```
+
+## Clean up Docker
 ```
 docker rm -vf $(docker ps -aq)  
 docker rmi -f $(docker images -aq)
-gcloud projects delete PROJECT_ID
 
 ```
 

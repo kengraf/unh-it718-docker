@@ -15,7 +15,7 @@ gcloud projects create YOUR_PROJECT_ID
 gcloud config set project YOUR_PROJECT_ID
 gcloud services list --available
 gcloud services enable container.googleapis.com
-gcloud config set compute/zone compute-zone
+gcloud config set compute/zone us-west1-a
 ```
 [Docker cheat sheet](https://dockerlabs.collabnix.com/docker/cheatsheet/)  
 [Kubenetes cheat sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)  
@@ -65,6 +65,14 @@ What happens to the images and containers when the cloudshell session temrinates
 Now that we have a deploy focused Docker image, it is time to learn about scaling it with Kubernete.  
 A more complete deployment back & front endis provided in Google's Kubenetes examples: [GCP demo](https://cloud.google.com/kubernetes-engine/docs/tutorials/guestbook)  
 
+Push image to repo
+You will a docker hub account http://hub.docker.com.  
+```
+docker login --username YOUR_NAME
+docker tag http YOUR_NAME/http:v1
+docker push YOUR_NAME/http:v1
+```
+
 Create a new cluster for the deployment
 ```
 gcloud container clusters create http --num-nodes=4
@@ -87,10 +95,11 @@ kubectl get service
 ```
 
 Deploy frontend
+Note: This assumes the http image generated above is still available locally
 ```
-kubectl apply -f http-deployment.yaml
+kubectl apply -f deployment.yaml
 kubectl get pods -l app=http -l tier=frontend
-kubectl apply -f http-service.yaml
+kubectl apply -f service.yaml
 kubectl get service http
 kubectl scale deployment http --replicas=5
 kubectl get pods

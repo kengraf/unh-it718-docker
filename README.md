@@ -61,48 +61,50 @@ Which image can you debug by getting shell access? docker run -it IMAGE SHELL
 Is there any way to debug the "http" container?  
 What happens to the images and containers when the cloudshell session temrinates?  
 
+To finish the build cycler we need to push our image to Docker Hub, this primes the deployment cycle
+You will a docker hub account http://hub.docker.com.  
+```
+docker login --username YOUR_NAME
+docker tag http YOUR_NAME/hpa-example:v1
+docker push YOUR_NAME/hpa-example:v1
+```
+
+## Clean up Docker
+```
+docker rm -vf $(docker ps -aq)  
+docker rmi -f $(docker images -aq)
+```
+
 ## Lesson #3
 Now that we have a deploy focused Docker image, it is time to learn about scaling it with Kubernete.  
 A more complete deployment back & front endis provided in Google's Kubenetes examples: [GCP demo](https://cloud.google.com/kubernetes-engine/docs/tutorials/guestbook)  
 
-Push image to repo
-You will a docker hub account http://hub.docker.com.  
+Insure your Cloudshell settings are current.  This is needed if you have to reconnect after an inactivity timeout.
 ```
-docker login --username YOUR_NAME
-docker tag http YOUR_NAME/http:v1
-docker push YOUR_NAME/http:v1
-
+gcloud config set project YOUR_PROJECT_ID
+gcloud config set compute/zone us-west1-a
 ```
 
 Create a new cluster for the deployment
 ```
-gcloud container clusters create http --num-nodes=4
+gcloud container clusters create hpa-example --num-nodes=4
 gcloud container clusters list
-gcloud container clusters describe http
-
+gcloud container clusters describe hpa-example
 ```
 
-Deploy frontend
-Note: This assumes the http image generated above is still available locally
 ```
-kubectl apply -f deployment.yaml
-kubectl get pods -l app=http -l tier=frontend
-kubectl apply -f service.yaml
-  or
-kubectl expose deployment http --name=http --type=LoadBalancer --port 80 --target-port 8090
-
-kubectl apply -f scaling.yaml
-kubectl autoscale deployment http --cpu-percent=50 --min=1 --max=10
-kubectl get service http
-kubectl scale deployment http --replicas=5
-kubectl get pods
+kubectl apply -f hpa-example.yaml
+kubectl get -f hpa-example.yaml
+kubectl autoscale deployment hpa-example --cpu-percent=50 --min=1 --max=10
+kubectl get hpa
+kubectl run -i --tty load-generator --rm --image=busybox --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- http://hpa-example; done"
 ```
 
 Commands to check status
 ```
 kubectl get deployments
 kubectl get services
-kubectl rollout status deployment/http
+kubectl rollout status deployment/hpa-example
 kubectl get rs
 kubectl get pods --show-labels
 docker run --rm -it -v ~/.kube/config:/root/.kube/config quay.io/derailed/k9s
@@ -117,17 +119,12 @@ kubectl run -i --tty load-generator --rm --image=busybox --restart=Never -- /bin
 
 Clean up Kubernetes
 ```
-kubectl delete service http
-kubectl delete deployment http
+kubectl delete service hpa-example
+kubectl delete deployment hpa-example
+kubectl delete hpa hpa-example
+kubectl delete pod load-generator
 gcloud compute forwarding-rules list
-gcloud container clusters delete http
-
+gcloud container clusters delete hpa-example
 ```
 
-## Clean up Docker
-```
-docker rm -vf $(docker ps -aq)  
-docker rmi -f $(docker images -aq)
-
-```
 

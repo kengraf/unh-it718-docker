@@ -1,7 +1,7 @@
 # UNH-IT718-docker
 Course demo for 12-factor and Docker
 
-The output of this process is the input to [Github UNH-IT718-k8s]()
+The output of this process is the input to [Github UNH-IT718-k8s](https://github.com/kengraf/UNH-IT718-k8s)
 
 The sample Golang application provides three functions. No Golang knowledge is required
 - /hello  # Echo back hello with a possible random upto 10 sec delay
@@ -81,57 +81,4 @@ How do we understand the impact of upgrading?
 docker rm -vf $(docker ps -aq)  
 docker rmi -f $(docker images -aq)
 ```
-
-## Lesson #3
-Now that we have a deploy focused Docker image, it is time to learn about scaling it with Kubernete.  
-A more complete deployment back & front endis provided in Google's Kubenetes examples: [GCP demo](https://cloud.google.com/kubernetes-engine/docs/tutorials/guestbook)  
-
-Insure your Cloudshell settings are current.  This is needed if you have to reconnect after an inactivity timeout.
-```
-gcloud config set project YOUR_PROJECT_ID
-gcloud config set compute/zone us-west1-a
-```
-
-Create a new cluster for the deployment
-```
-gcloud container clusters create hpa-example --num-nodes=4
-gcloud container clusters list
-gcloud container clusters describe hpa-example
-```
-
-```
-kubectl apply -f hpa-example.yaml
-kubectl get -f hpa-example.yaml
-kubectl autoscale deployment hpa-example --cpu-percent=50 --min=1 --max=10
-kubectl get hpa
-kubectl run -i --tty load-generator --rm --image=busybox --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- http://hpa-example; done"
-```
-
-Commands to check status
-```
-kubectl get deployments
-kubectl get services
-kubectl rollout status deployment/hpa-example
-kubectl get rs
-kubectl get pods --show-labels
-docker run --rm -it -v ~/.kube/config:/root/.kube/config quay.io/derailed/k9s
-```
-
-```
-# Run this in a separate terminal
-# so that the load generation continues and you can carry on with the rest of the steps
-kubectl run -i --tty load-generator --rm --image=busybox --restart=Never -- /bin/sh -c "while sleep 1; do wget -b -q -O- http://EXTERNAL_LOADBALANCER_IP/hello; done"
-```
-
-
-Clean up Kubernetes
-```
-kubectl delete service hpa-example
-kubectl delete deployment hpa-example
-kubectl delete hpa hpa-example
-kubectl delete pod load-generator
-gcloud compute forwarding-rules list
-gcloud container clusters delete hpa-example
-```
-
 

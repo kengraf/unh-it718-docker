@@ -1,8 +1,10 @@
-# 12-factor-app
-Course demo for 12-factor, Docker, Kubernetes concepts
+# UNH-IT718-docker
+Course demo for 12-factor and Docker
 
-The sample Golang application provides three functions. No Golang programming is required
-- /hello  # Echo back hello
+The output of this process is the input to [Github UNH-IT718-k8s]()
+
+The sample Golang application provides three functions. No Golang knowledge is required
+- /hello  # Echo back hello with a possible random upto 10 sec delay
 - /headers   # Display the HTTP headers used
 - /dowork # Wastes time by generating millions of random numbers so we can play with Kubernetes scaling
 

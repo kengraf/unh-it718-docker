@@ -61,13 +61,18 @@ Which image can you debug by getting shell access? docker run -it IMAGE SHELL
 Is there any way to debug the "http" container?  
 What happens to the images and containers when the cloudshell session temrinates?  
 
-To finish the build cycler we need to push our image to Docker Hub, this primes the deployment cycle
-You will a docker hub account http://hub.docker.com.  
+To finish the build CI cycle we need to push our image to Docker Hub, this primes the CD cycle
+You will need a docker hub account http://hub.docker.com.  
 ```
 docker login --username YOUR_NAME
 docker tag http YOUR_NAME/hpa-example:v1
 docker push YOUR_NAME/hpa-example:v1
 ```
+***Extra Credit***  
+Why should the deployer trust what the developer pushed?
+How do we validate content?
+How do we assess security?
+How do we understand the impact of upgrading?
 
 ## Clean up Docker
 ```

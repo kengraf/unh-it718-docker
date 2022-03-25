@@ -91,7 +91,7 @@ kubectl apply -f service.yaml
   or
 kubectl expose deployment http --name=http --type=LoadBalancer --port 80 --target-port 8090
 kubectl get service http
-kubectl autoscale deployment http --cpu-percent=80 --min=1 --max=5
+kubectl autoscale deployment http --cpu-percent=50 --min=1 --max=5
 kubectl scale deployment http --replicas=5
 kubectl get pods
 
@@ -110,7 +110,7 @@ kubectl get pods --show-labels
 ```
 # Run this in a separate terminal
 # so that the load generation continues and you can carry on with the rest of the steps
-kubectl run -i --tty load-generator --rm --image=busybox --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- http://EXTERNAL_LOADBALANCER_IP/hello; done"
+kubectl run -i --tty load-generator --rm --image=busybox --restart=Never -- /bin/sh -c "while sleep 1; do wget -b -q -O- http://EXTERNAL_LOADBALANCER_IP/hello; done"
 
 ```
 

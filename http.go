@@ -4,10 +4,12 @@ import (
     "fmt"
     "net/http"
     "math/rand"
+    "time"
 )
 
 func hello(w http.ResponseWriter, req *http.Request) {
 
+    time.Sleep( rand.Intn(10) * time.Second)
     fmt.Fprintf(w, "hello\n")
 }
 

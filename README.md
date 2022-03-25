@@ -90,11 +90,12 @@ kubectl get pods -l app=http -l tier=frontend
 kubectl apply -f service.yaml
   or
 kubectl expose deployment http --name=http --type=LoadBalancer --port 80 --target-port 8090
+
+kubectl apply -f scaling.yaml
+kubectl autoscale deployment http --cpu-percent=50 --min=1 --max=10
 kubectl get service http
-kubectl autoscale deployment http --cpu-percent=50 --min=1 --max=5
 kubectl scale deployment http --replicas=5
 kubectl get pods
-
 ```
 
 Commands to check status
@@ -104,14 +105,13 @@ kubectl get services
 kubectl rollout status deployment/http
 kubectl get rs
 kubectl get pods --show-labels
-
+docker run --rm -it -v ~/.kube/config:/root/.kube/config quay.io/derailed/k9s
 ```
 
 ```
 # Run this in a separate terminal
 # so that the load generation continues and you can carry on with the rest of the steps
 kubectl run -i --tty load-generator --rm --image=busybox --restart=Never -- /bin/sh -c "while sleep 1; do wget -b -q -O- http://EXTERNAL_LOADBALANCER_IP/hello; done"
-
 ```
 
 

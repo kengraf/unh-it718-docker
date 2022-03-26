@@ -34,7 +34,7 @@ Experiment with a builder style Docker deployment.
 
 The build
 ```
-git clone https://github.com/kengraf/12-factor-app.git
+git clone https://github.com/kengraf/unh-it718-docker.git
 cd 12-factor-app
 docker build -t http .
 ```

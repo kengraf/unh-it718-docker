@@ -13,8 +13,11 @@ It's assumed you are running in GCP Cloudshell as it provides builtin Go, Docker
 Your cloudshell should be associated with a fully authorized project and located in your preferred region.  
 The following commands are provided for your conveniance.
 ```
-gcloud projects create YOUR_PROJECT_ID
-gcloud config set project YOUR_PROJECT_ID
+PROJECT_ID=???
+```
+```
+gcloud projects create $PROJECT_ID
+gcloud config set project $PROJECT_ID
 gcloud services list --available
 gcloud services enable container.googleapis.com
 gcloud config set compute/zone us-west1-a

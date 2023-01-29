@@ -57,6 +57,27 @@ curl http://localhost/hello
 curl http://localhost/headers
 curl http://localhost/dowork
 ```
+
+## Build a swarm
+```
+docker swarm init
+```
+```
+docker swarm join-token manager
+```
+```
+docker swarm join-token worker
+```
+On the additional nodes issue the join command shown as output of the above commands  
+
+Publish the app in the swarm.  This create an overlay network
+```
+docker service create --name http \
+                        --replicas 3 \
+                        --publish published=8090,target=80 \
+                        billiardyoda/hpa-example:v1
+```
+
 ***Extra Credit***  
 Why not seperate building the **developer** and **deployer** images into different Dockerfiles?
 Can you retrieve the "app" and run it locally?  

@@ -38,8 +38,8 @@ No active containers until you run something
 docker ps -a 
 ```
 
-Run time  
-Build the application, /header returns immediately, /hello within 10 second, /dowork should take a minute or two  
+### Run time  
+Build the application, /header returns immediately, /hello within 10 seconds, /dowork should take a minute or two  
 
 ```
 docker run -d -p 80:8090 http
@@ -48,7 +48,7 @@ curl http://localhost/headers
 curl http://localhost/dowork
 ```
 
-***Items for class consideration***  
+### Items for class consideration  
 Why not seperate building the **developer** and **deployer** images into different Dockerfiles?  
 Can you retrieve the "app" and run it locally?   
 Is the "app" located in the same directory for both the **developer** and **deployer** images?  Can you prove it?  
@@ -94,6 +94,17 @@ This create an overlay network that offers port 8090 to the outside world
 docker service create --name http --replicas 3 --publish published=8090,target=8090 billiardyoda/hpa-example:v1
 ```
 
+Look at the overlay network
+```
+docker network ls
+docker network inspect ingress
+```
+
+Verify more than one node is serving the container.  
+The Docker playground will have a URL like this:
+`http://ip172-18-0-47-cfbgvpf91rrg00dk84ig-8090.direct.labs.play-with-docker.com/hello`
+
+
 ## NOTES
 #### GCP Setup
 It's assumed you are running in GCP Cloudshell as it provides builtin Go, Docker, and Kubernetes support.  
@@ -115,6 +126,7 @@ gcloud config set compute/zone us-west1-a
 docker rm -vf $(docker ps -aq)  
 docker rmi -f $(docker images -aq)
 ```
+
 #### AWS Setup
 TBD
 

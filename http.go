@@ -28,7 +28,7 @@ func GetLocalIP() string {
 func hello(w http.ResponseWriter, req *http.Request) {
 
     time.Sleep( time.Duration(rand.Intn(10)) * time.Second)
-    fmt.Fprintf(w, "hello from: "+GetLocalIP() )
+    fmt.Fprintf(w, "hello from: " + GetLocalIP() + "\n" )
 }
 
 func headers(w http.ResponseWriter, req *http.Request) {

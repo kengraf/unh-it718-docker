@@ -49,15 +49,16 @@ curl http://localhost/dowork
 ```
 
 ***Items for class consideration***  
-Why not seperate building the **developer** and **deployer** images into different Dockerfiles?
-Can you retrieve the "app" and run it locally?  
+Why not seperate building the **developer** and **deployer** images into different Dockerfiles?  
+Can you retrieve the "app" and run it locally?   
 Is the "app" located in the same directory for both the **developer** and **deployer** images?  Can you prove it?  
 Can you explain the significant size difference in the images?  
-Which image can you debug by getting shell access? docker run -it IMAGE SHELL  
+Which image can you debug by getting shell access via: `docker run -it <IMAGE> /bin/sh`?   
 Is there any way to debug the "http" container?  
 What happens to the images and containers when the cloudshell/playground session temrinates?  
 
-To finish the build CI cycle we need to push our image to Docker Hub, this primes the CD cycle
+### The deployment cycle
+To finish the build CI cycle we need to push our image to Docker Hub, this primes the CD cycle  
 You will need a docker hub account http://hub.docker.com.  
 My Dockerhub account is *billiardyoda*, you will need to subsitute your Dockerhub handle.  
 ```
@@ -66,15 +67,19 @@ docker tag http billiardyoda/hpa-example:v1
 docker push billiardyoda/hpa-example:v1
 ```
 ***Extra Credit***  
-Why should the deployer trust what the developer pushed?
-How do we validate content?
-How do we assess security?
-How do we understand the impact of upgrading?
+Why should the deployer trust what the developer pushed?  
+How do we validate content?  
+How do we assess security?  
+How do we understand the impact of upgrading?  
 
-## Build a swarm
+## Build a swarm  
+At this point we have a known good container.  So let's use Docker swarm to deploy a higher availability environment.  The commands below show how to build a swarm by hand.  The Docker playground will build the swarn for you automatically.  
+
+### Create the swarm on the initial manager instance
 ```
 docker swarm init
 ```
+#### Create tokens to join the swarm, either as a manager or worker.  
 ```
 docker swarm join-token manager
 ```
@@ -83,7 +88,8 @@ docker swarm join-token worker
 ```
 On the additional nodes issue the join command shown as output of the above commands  
 
-Publish the app to the swarm.  This create an overlay network that offers port 8090 to the outside world  
+### Publish the app to the swarm.  
+This create an overlay network that offers port 8090 to the outside world  
 ```
 docker service create --name http --replicas 3 --publish published=8090,target=8090 billiardyoda/hpa-example:v1
 ```

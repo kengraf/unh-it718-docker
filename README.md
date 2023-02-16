@@ -103,7 +103,10 @@ docker network inspect ingress
 
 Verify more than one node is serving the container.  
 The Docker playground will have a URL like this:
-`http://ip172-18-0-47-cfbgvpf91rrg00dk84ig-8090.direct.labs.play-with-docker.com/hello`
+`http://ip172-18-0-47-cfbgvpf91rrg00dk84ig-8090.direct.labs.play-with-docker.com/hello`  
+
+You validate Swarm load balancing with this command
+`for ((i=1;i<20;i++)); do curl -s http://localhost:8090/hello; done | sort | uniq -c`
 
 
 ## NOTES

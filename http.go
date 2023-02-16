@@ -60,6 +60,7 @@ func dowork(w http.ResponseWriter, req *http.Request) {
 func main() {
 
     http.HandleFunc("/hello", hello)
+    http.HandleFunc("/wait", wait)
     http.HandleFunc("/headers", headers)
     http.HandleFunc("/dowork", dowork)
 

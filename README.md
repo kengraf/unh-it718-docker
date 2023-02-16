@@ -44,6 +44,7 @@ Build the application, /header returns immediately, /hello within 10 seconds, /d
 ```
 docker run -d -p 80:8090 http
 curl http://localhost/hello
+curl http://localhost/wait
 curl http://localhost/headers
 curl http://localhost/dowork
 ```

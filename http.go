@@ -34,7 +34,7 @@ func wait(w http.ResponseWriter, req *http.Request) {
 
     var t = time.Duration(rand.Intn(10)) * time.Second
     time.Sleep( t )
-    fmt.Fprintf(w, "" + GetLocalIP() + " delayed for " + t + " seconds \n" )
+    fmt.Fprintf(w, GetLocalIP() + " delayed for " + t.String() + " seconds \n" )
 }
 
 func headers(w http.ResponseWriter, req *http.Request) {

@@ -32,7 +32,7 @@ func hello(w http.ResponseWriter, req *http.Request) {
 
 func wait(w http.ResponseWriter, req *http.Request) {
 
-    t = time.Duration(rand.Intn(10)) * time.Second
+    var t = time.Duration(rand.Intn(10)) * time.Second
     time.Sleep( t )
     fmt.Fprintf(w, GetLocalIP() + " delayed for " + t + " seconds \n" )
 }

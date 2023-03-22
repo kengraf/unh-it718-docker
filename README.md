@@ -132,5 +132,19 @@ docker rmi -f $(docker images -aq)
 ```
 
 #### AWS Setup
-TBD
+Create a launch template in your referred region.  t2micro instance sizes work well.  
+Add the following as your UserData.  This will install and start the docker engine.
+
+```
+#!/bin/sh
+yum -y update
+yum -y install docker python3-pip 
+pip3 install --user docker-compose
+usermod -a -G docker ec2-user
+id ec2-user
+newgrp docker
+systemctl enable docker.service
+systemctl start docker.service
+```
+
 

@@ -51,7 +51,7 @@ Is the "app" located in the same directory for both the **developer** and **depl
 Can you explain the significant size difference in the images?  
 Which image can you debug by getting shell access via: `docker run -it <IMAGE> /bin/sh`?   
 Is there any way to debug the "http" container?  
-What happens to the images and containers when the cloudshell/playground session temrinates?  
+What happens to the images and containers when the cloudshell/playground session terminates?  
 
 ### The deployment cycle
 To finish the build CI cycle we need to push our image to Docker Hub, this primes the CD cycle  

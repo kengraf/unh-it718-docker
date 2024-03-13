@@ -4,7 +4,7 @@ Course demo for introduction to Docker and the 12-factor-app
 The container created in this repo is the input to [Github UNH-IT718-k8s](https://github.com/kengraf/UNH-IT718-k8s)
 
 The sample Golang application provides three functions. No Golang knowledge is required
-- /hello  # Echo back the local IP address with a possible random upto 10 sec delay
+- /hello  # Echo back the local IP address with a random upto 10 sec delay
 - /headers   # Display the HTTP headers used
 - /dowork # Wastes time by generating millions of random numbers so we can play with Kubernetes scaling
 

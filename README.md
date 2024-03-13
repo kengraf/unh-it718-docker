@@ -25,11 +25,6 @@ docker build -t http .
 ```
 
 Validation: this is a good time to experiment with commands from the Docker cheat sheet.    
-Show the 3 images: goland pulled from DockerHub, a unnamed developer image, and the scratch based http image
-```
-docker images
-```
-Show additional image layers created during the build
 ```
 docker images --all 
 ```

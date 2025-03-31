@@ -46,6 +46,11 @@ curl http://localhost/dowork
 
 ### Items for class consideration  
 Why not seperate building the **developer** and **deployer** images into different Dockerfiles?  
+> [!NOTE]
+> To retain the developer stage build it seperately
+```
+docker build --target golang_build -t myapp-builder .  
+```
 Can you retrieve the "app" and run it locally?   
 Is the "app" located in the same directory for both the **developer** and **deployer** images?  Can you prove it?  
 Can you explain the significant size difference in the images?  

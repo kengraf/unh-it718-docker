@@ -4,7 +4,7 @@ Course demo for introduction to Docker and the 12-factor-app
 The container created in this repo is the input to [Github UNH-IT718-k8s](https://github.com/kengraf/UNH-IT718-k8s)
 
 The sample Golang application provides three functions. No Golang knowledge is required
-- /hello  # Echo back the local IP address with a random upto 10 sec delay
+- /hello  # Echo back the local IP address with a random up to 10 sec delay
 - /headers   # Display the HTTP headers used
 - /dowork # Wastes time by generating millions of random numbers so we can play with Kubernetes scaling
 
@@ -105,7 +105,7 @@ You validate Swarm load balancing with this command
 
 
 ## NOTES
-#### GCP Setup
+### GCP Setup
 It's assumed you are running in GCP Cloudshell as it provides builtin Go, Docker, and Kubernetes support.  
 Your cloudshell should be associated with a fully authorized project and located in your preferred region.  
 The following commands are provided for your conveniance.
@@ -120,13 +120,14 @@ gcloud services enable container.googleapis.com
 gcloud config set compute/zone us-west1-a
 ```
 
-## Need to clean up Docker to release GCP resources
+> [!NOTE]
+> Need to clean up Docker to release GCP resources
 ```
 docker rm -vf $(docker ps -aq)  
 docker rmi -f $(docker images -aq)
 ```
 
-#### AWS Setup
+### AWS Setup
 Create a launch template in your referred region.  t2micro instance sizes work well.  
 Add the following as your UserData.  This will install and start the docker engine.
 
